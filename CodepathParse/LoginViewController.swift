@@ -7,9 +7,14 @@
 //
 
 import UIKit
+import Parse
 
 class LoginViewController: UIViewController {
 
+    
+    @IBOutlet weak var emailTextField: UITextField!
+    @IBOutlet weak var pwdTextField: UITextField!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -21,6 +26,39 @@ class LoginViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    @IBAction func onSignUp(_ sender: Any) {
+        let user = PFUser()
+        user.username = emailTextField.text ?? ""
+        user.password = pwdTextField.text ?? ""
+        user.email = emailTextField.text ?? ""
+        
+        user.signUpInBackground { (Bool, error: Error?) in
+            if let error = error {
+                let errorString = error.localizedDescription
+                let alertController = UIAlertController(title: "Email/Password Incorrect", message: errorString, preferredStyle: .alert)
+                let OKAction = UIAlertAction(title: "OK", style: .default) { (action) in
+                    // handle response here.
+                }
+                alertController.addAction(OKAction)
+            }
+        }
+    }
+    
+    @IBAction func onLogin(_ sender: Any) {
+        PFUser.logInWithUsername(inBackground: emailTextField.text!, password: pwdTextField.text!) { (user: PFUser?, error: Error?) in
+            if user != nil {
+                print("Login Successful")
+            } else {
+                let errorString = error?.localizedDescription
+                let alertController = UIAlertController(title: "Email/Password Incorrect", message: errorString, preferredStyle: .alert)
+                let OKAction = UIAlertAction(title: "OK", style: .default) { (action) in
+                    // handle response here.
+                }
+                alertController.addAction(OKAction)
+            }
+
+        }
+    }
 
     /*
     // MARK: - Navigation
