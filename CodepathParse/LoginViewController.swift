@@ -48,6 +48,7 @@ class LoginViewController: UIViewController {
         PFUser.logInWithUsername(inBackground: emailTextField.text!, password: pwdTextField.text!) { (user: PFUser?, error: Error?) in
             if user != nil {
                 print("Login Successful")
+                self.performSegue(withIdentifier: "ToChatView", sender: nil)
             } else {
                 let errorString = error?.localizedDescription
                 let alertController = UIAlertController(title: "Email/Password Incorrect", message: errorString, preferredStyle: .alert)
