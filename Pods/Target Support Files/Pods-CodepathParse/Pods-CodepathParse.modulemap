@@ -1,0 +1,6 @@
+framework module Pods_CodepathParse {
+  umbrella header "Pods-CodepathParse-umbrella.h"
+
+  export *
+  module * { export * }
+}
